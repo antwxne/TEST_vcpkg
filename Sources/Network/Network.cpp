@@ -48,7 +48,7 @@ void Network::AcceptCallBack(Client &client)
         StartAccept();
         return;
     }
-    std::cout << "Client: connected" << std::endl;
+    std::cout << "Client connected" << std::endl;
     StartReceive(client);
 }
 
@@ -73,7 +73,6 @@ void Network::ReceiveCallBack(Client &client, const std::error_code &error,
         std::cout << "Client disconnected" << std::endl;
         return;
     }
-    std::cout << std::to_string(bytes_transfered) + " Bytes read" << std::endl;
     setString(client.ToString());
     client._buffer.erase(client._buffer.begin(), client._buffer.end());
     #ifdef _WIN32

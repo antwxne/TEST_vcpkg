@@ -1,6 +1,8 @@
 build
 cmake-build-debug
 .idea
+docker_build
+PLOP
 # Prerequisites
 *.d
 
