@@ -55,7 +55,7 @@ void Network::AcceptCallBack(Client &client)
 void Network::StartReceive(Client &client)
 {
     #ifdef _WIN32
-    std::string delimiter = "\r\n";
+    std::string delimiter = "\n";
     #else
     std::string delimiter = "\n";
     #endif
@@ -69,8 +69,10 @@ void Network::ReceiveCallBack(Client &client, const std::error_code &error,
     const std::size_t bytes_transfered
 )
 {
-    if (error == asio::error::eof) {
+    // magic value to handle when the client CTRL C
+    if (error == asio::error::eof || error.value() == 10054) {
         std::cout << "Client disconnected" << std::endl;
+        StartAccept();
         return;
     }
     setString(client.ToString());
@@ -86,7 +88,7 @@ void Network::ReceiveCallBack(Client &client, const std::error_code &error,
 
 void Network::SendResponse(Client &client, const std::string &data)
 {
-    client._socket.async_send(asio::buffer(data, data.size() * sizeof *data.begin()), [&](const asio::error_code &errorCode,
+    client._socket.async_send(asio::buffer(&*data.begin(), data.size() * sizeof *data.begin()), [&](const asio::error_code &errorCode,
         std::size_t bytesTransferred){
     });
 }

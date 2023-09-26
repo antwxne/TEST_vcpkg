@@ -4,7 +4,7 @@
 
 #include "Client.hpp"
 
-Client::Client(asio::io_context &ioContext): _socket(ioContext)
+Client::Client(asio::io_context &ioContext): _socket(ioContext), _buffer(0, 0)
 {
 }
 
