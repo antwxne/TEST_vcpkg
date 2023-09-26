@@ -33,9 +33,8 @@ jobs:
           ${{ matrix.vcpkg-bootstap-cmd }}
       
       - name: Download dependencies
-        working-directory: build
         run: |
-          cmake -DCMAKE_TOOLCHAIN_FILE=${{ matrix.toolchain-file }} ..
+          cmake -B build -S . -DCMAKE_TOOLCHAIN_FILE=${{ matrix.toolchain-file }}
         
       - name: Build
         run: cmake --build .
