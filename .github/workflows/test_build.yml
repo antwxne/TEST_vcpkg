@@ -19,25 +19,25 @@ jobs:
         include:
           - os: windows-latest
             vcpkg-bootstap-cmd: .\vcpkg\bootstrap-vcpkg.bat
+            toolchain-file: ./vcpkg/scripts/buildsystems/vcpkg.cmake
+
           - os: ubuntu-latest
             vcpkg-bootstap-cmd: ./vcpkg/bootstrap-vcpkg.sh
-    env:
-      CMAKE_TOOLCHAIN_FILE: /home/runner/work/vcpkg/scripts/buildsystems/vcpkg.cmake
+            toolchain-file: ./vcpkg/scripts/buildsystems/vcpkg.cmake
     runs-on: ${{ matrix.os }}
     steps:
+      - uses: actions/checkout@v3
       - name: Install VCPKG
         run: |
           git clone https://github.com/Microsoft/vcpkg.git
           ${{ matrix.vcpkg-bootstap-cmd }}
-        working-directory: /home/runner/work/
       
-      - uses: actions/checkout@v3
-      - name: Create build directory
-        run: |
-          mkdir -p build
-      - name: Build
+      - name: Download dependencies
         working-directory: build
         run: |
-          cmake ..
-          cmake --build
+          cmake -DCMAKE_TOOLCHAIN_FILE=${{ matrix.toolchain-file }} ..
+        
+      - name: Build
+        run: cmake --build .
+        working-directory: build
         
