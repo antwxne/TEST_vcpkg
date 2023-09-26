@@ -18,9 +18,9 @@ jobs:
         os: [ubuntu-latest, windows-latest]
         include:
           - os: windows-latest
-            vcpkg-bootstap-cmd: \vcpkg\bootstrap-vcpkg.bat
+            vcpkg-bootstap-cmd: .\vcpkg\bootstrap-vcpkg.bat
           - os: ubuntu-latest
-            vcpkg-bootstap-cmd: /vcpkg/bootstrap-vcpkg.sh
+            vcpkg-bootstap-cmd: ./vcpkg/bootstrap-vcpkg.sh
     env:
       CMAKE_TOOLCHAIN_FILE: /home/runner/work/vcpkg/scripts/buildsystems/vcpkg.cmake
     runs-on: ${{ matrix.os }}
