@@ -19,7 +19,7 @@ jobs:
         include:
           - os: windows-latest
             vcpkg-bootstap-cmd: .\vcpkg\bootstrap-vcpkg.bat
-            toolchain-file: ./vcpkg/scripts/buildsystems/vcpkg.cmake
+            toolchain-file: .\vcpkg\scripts\buildsystems\vcpkg.cmake
 
           - os: ubuntu-latest
             vcpkg-bootstap-cmd: ./vcpkg/bootstrap-vcpkg.sh
