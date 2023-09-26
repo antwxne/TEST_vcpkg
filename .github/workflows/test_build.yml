@@ -1,0 +1,42 @@
+name: Build check
+on:
+  push:
+    branches:
+      - master
+      - main
+      - CI
+  pull_request:
+    branches:
+      - master
+      - main
+      - CI
+jobs:
+  build:
+    name: Build check
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        include:
+          - os: windows-latest
+            vcpkg-bootstap-cmd: \vcpkg\bootstrap-vcpkg.bat
+          - os: ubuntu-latest
+            vcpkg-bootstap-cmd: /vcpkg/bootstrap-vcpkg.sh
+    env:
+      CMAKE_TOOLCHAIN_FILE: /vcpkg/scripts/buildsystems/vcpkg.cmake
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Install VCPKG
+        run: |
+          git clone https://github.com/Microsoft/vcpkg.git
+          ${{ matrix.vcpkg-bootstap-cmd }}
+        working-directory: /
+      - uses: actions/checkout@v3
+      - name: Create build directory
+        run: |
+          mkdir -p build
+      - name: Build
+        working-directory: build
+        run: |
+          cmake ..
+          cmake --build
+        
