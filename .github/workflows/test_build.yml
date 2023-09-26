@@ -22,7 +22,7 @@ jobs:
           - os: ubuntu-latest
             vcpkg-bootstap-cmd: /vcpkg/bootstrap-vcpkg.sh
     env:
-      CMAKE_TOOLCHAIN_FILE: vcpkg/scripts/buildsystems/vcpkg.cmake
+      CMAKE_TOOLCHAIN_FILE: /home/runner/work/vcpkg/scripts/buildsystems/vcpkg.cmake
     runs-on: ${{ matrix.os }}
     steps:
       - name: Install VCPKG
@@ -30,7 +30,7 @@ jobs:
           git clone https://github.com/Microsoft/vcpkg.git
           ${{ matrix.vcpkg-bootstap-cmd }}
           pwd
-        working-directory: vcpkg
+        working-directory: /home/runner/work/
       - uses: actions/checkout@v3
       - name: Create build directory
         run: |
