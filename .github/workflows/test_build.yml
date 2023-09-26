@@ -34,7 +34,7 @@ jobs:
       
       - name: Download dependencies
         run: |
-          cmake -B build -S . -DCMAKE_TOOLCHAIN_FILE=${{ matrix.toolchain-file }}
+          cmake -DCMAKE_TOOLCHAIN_FILE=${{ matrix.toolchain-file }} -B build -S .
         
       - name: Build
         run: cmake --build .
